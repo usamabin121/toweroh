@@ -1,0 +1,30 @@
+.text
+   input:
+   la $a0,disk
+   li $v0,4 
+   syscall #printing string
+   li $v0,5
+   syscall #reading integer
+   move $s0,$v0 #shift input to s0
+   li $t1,1
+   hanoi:
+   beqz $s0,output
+   addi $s0,$s0,-1 #counter for power
+   mul $t1,$t1,2
+   j hanoi
+   output:
+    mflo $t1
+   subi $t1,$t1,1
+   la $a0,moves
+   li $v0,4 
+   syscall #printing string
+   move $a0,$t1
+   li $v0,1
+   syscall #printing output
+   end:
+   li $v0,10
+   syscall #termination of program
+    
+.data    
+   disk: .asciiz "Enter no.of disks: "
+   moves: "\nThe no. of moves need to solve the tower of hanoi are: "
